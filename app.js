@@ -71,7 +71,63 @@ function addItem(e) {
     }
 }
 
+// display alert
+function displayAlert() {
+    alert.textContent = "";
+    alert.classList.add(`alert-${action}`);
+    // remove alert
+    setTimeout(function() {
+        alert.textContent = "";
+        alert.classList.remove(`alert-${action}`);
+    }, 1000);
+}
+
 // clear items
 function clearItems() {
-    alert("l");
+    const items = document.querySelector(".grocery-item");
+    if (items.length > 0) {
+        items.forEach(function(item) {
+            list.removeChild(item);
+        });
+    }
+    container.classList.remove("show-container");
+    displayAlert("empty list", "danger");
+    setBackToDefault();
+    localStorage.removeItem("list");
+}
+
+// delete items
+function deleteItems() {
+    const element = e.currentTarget.parentElement.parentElement;
+    const id = element.dataset.id;
+
+    list.removeChild(element);
+
+    if (list.children.length === 0) {
+        container.classList.remove("show-container");
+    }
+    displayAlert("item-removed", "danger");
+
+    setBackToDefault();
+    // remove from local storage
+    removeFromLocalStorage(id);
+}
+//  edit item
+function editItem(e) {
+    const element = e.currentTarget.parentElement.parentElement;
+    // set edit item
+    editElement = e.currentTarget.parentElement.previousElementSibling;
+    // set form value
+    grocery.value = editElement.innerHTML;
+    editFlag = true;
+    editID = element.dataset.id;
+
+    submitBtn.textContent = "edit";
+}
+// set back to defaults
+
+function setBackToDefault() {
+    grocery.value = "";
+    editFlag = false;
+
 }
