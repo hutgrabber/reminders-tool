@@ -31,6 +31,6 @@ function addItem(e) {
     if (value !== "" && !editFlag) {
         const element = document.createElement("article");
         let attr = document.createAttribute("data-id");
-
+        attr.value = id;
     }
 }
