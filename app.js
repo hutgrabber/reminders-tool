@@ -32,5 +32,46 @@ function addItem(e) {
         const element = document.createElement("article");
         let attr = document.createAttribute("data-id");
         attr.value = id;
+        element.setAttributeNode(attr);
+        element.classList.add("grocery-item");
+        element.innerHTML = `
+            <p class = "title">${value}</p>
+            <div class="btn-container">
+                <!-- edit btn -->
+                <button type="button" class="edit-btn">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+            `;
+        // add event listeners to both buttons
+        const deleteBtn = element.querySelector(".delete-btn");
+        deleteBtn.addEventListener("click", deleteItem);
+        const editBtn = element.querySelector(".edit-btn");
+        editBtn.addEventListener("click", editItem);
+
+        // append child
+        list.appendChild(element);
+        // display alert
+        displayAlert("Item added to the list", "success");
+        //  show container
+        container.classList.add("show-container");
+        //  set local storage
+        addToLocalStorage(id, value);
+        //  set back to default
+        setBackToDefault();
+    } else if (value !== "" && editFlag) {
+        editElement.innerHTML = value;
+        displayAlert("Value changed", "success");
+
+        // edit local storage
+        editLocalStorage(editID, value);
+        setBackToDefault();
+    } else {
+        displayAlert("Please enter a value", "danger");
     }
+}
+
+// clear items
+function clearItems() {
+    alert("l");
 }
